@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tora.ai</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Welcome to Tora.ai</h1>
+        <p><a href="#" id="get-started">Get Started Free</a></p>
+    </header>
+
+    <section id="generator">
+        <h2>Generate an Image</h2>
+        <textarea id="text-input" placeholder="Enter your description..."></textarea>
+        <select id="filter">
+            <option value="realistic">Realistic</option>
+            <option value="anime">Anime</option>
+            <option value="black_and_white">Black and White</option>
+            <option value="dreamy">Dreamy</option>
+        </select>
+        <button id="generate-btn">Generate</button>
+        <div id="image-results"></div>
+    </section>
+
+    <section id="subscription">
+        <h2>Subscription Options</h2>
+        <p>Get 15 Tokens for free per month, or:</p>
+        <button id="subscribe-monthly">Subscribe for $4.99/month</button>
+        <button id="buy-tokens">Buy 100 Tokens for $12.99</button>
+    </section>
+
+    <section id="creator-hub">
+        <h2>Creator Hub</h2>
+        <textarea id="story-input" placeholder="Create your story..."></textarea>
+        <button id="create-story-btn">Create Story</button>
+        <div id="creator-images"></div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
