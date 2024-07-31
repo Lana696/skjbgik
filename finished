@@ -1,0 +1,131 @@
+git clone https://github.com/username/repository-name.git
+cd repository-name
+// script.js
+
+document.addEventListener('DOMContentLoaded', () => {
+    const API_BASE_URL = 'https://api.tora.ai'; // Replace with your actual API base URL
+
+    // DOM Elements
+    const textInput = document.getElementById('text-input');
+    const filterSelect = document.getElementById('filter');
+    const generateBtn = document.getElementById('generate-btn');
+    const imageResults = document.getElementById('image-results');
+    const subscribeMonthlyBtn = document.getElementById('subscribe-monthly');
+    const buyTokensBtn = document.getElementById('buy-tokens');
+    const storyInput = document.getElementById('story-input');
+    const createStoryBtn = document.getElementById('create-story-btn');
+    const creatorImages = document.getElementById('creator-images');
+
+    // Token Management
+    let userTokens = 15; // Example: User starts with 15 tokens per month
+
+    function updateTokenDisplay() {
+        // Update token display (you should implement actual UI for token display)
+        console.log(`You have ${userTokens} tokens remaining.`);
+    }
+
+    // Generate Image
+    generateBtn.addEventListener('click', async () => {
+        const text = textInput.value;
+        const filter = filterSelect.value;
+        
+        if (userTokens > 0) {
+            userTokens -= 1; // Decrement token count
+            updateTokenDisplay();
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/generate`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer YOUR_API_KEY' // Replace with actual API key
+                    },
+                    body: JSON.stringify({ text, filter })
+                });
+                
+                const result = await response.json();
+                displayImages(result.images);
+                
+            } catch (error) {
+                console.error('Error generating image:', error);
+            }
+        } else {
+            alert('You do not have enough tokens.');
+        }
+    });
+
+    function displayImages(images) {
+        imageResults.innerHTML = '';
+        images.forEach(img => {
+            const imgElement = document.createElement('img');
+            imgElement.src = img.url; // Assuming each image object has a 'url' property
+            imgElement.alt = 'Generated Image';
+            imageResults.appendChild(imgElement);
+        });
+    }
+
+    // Subscription Options
+    subscribeMonthlyBtn.addEventListener('click', () => {
+        // Handle monthly subscription logic
+        alert('Subscribed for $4.99/month. You will receive 30 tokens each month.');
+        userTokens += 30; // Add tokens for subscription
+        updateTokenDisplay();
+    });
+
+    buyTokensBtn.addEventListener('click', () => {
+        // Handle one-time token purchase
+        alert('Purchased 100 tokens for $12.99.');
+        userTokens += 100; // Add tokens for purchase
+        updateTokenDisplay();
+    });
+
+    // Creator Hub
+    createStoryBtn.addEventListener('click', async () => {
+        const story = storyInput.value;
+        
+        try {
+            const response = await fetch(`${API_BASE_URL}/create-story`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer YOUR_API_KEY' // Replace with actual API key
+                },
+                body: JSON.stringify({ story })
+            });
+            
+            const result = await response.json();
+            displayCreatorImages(result.images);
+            
+        } catch (error) {
+            console.error('Error creating story:', error);
+        }
+    });
+
+    function displayCreatorImages(images) {
+        creatorImages.innerHTML = '';
+        images.forEach(img => {
+            const imgElement = document.createElement('img');
+            imgElement.src = img.url; // Assuming each image object has a 'url' property
+            imgElement.alt = 'Creator Image';
+            creatorImages.appendChild(imgElement);
+        });
+    }
+});
+git add script.js
+git commit -m "Add script.js"
+git push origin main
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Website</title>
+</head>
+<body>
+    <!-- Your HTML content here -->
+    <script src="script.js"></script> <!-- Reference to JavaScript file -->
+</body>
+</html>
+git add index.html
+git commit -m "Reference script.js in index.html"
+git push origin main
